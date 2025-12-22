@@ -1,0 +1,14 @@
+{
+  "name": "firstprojectofnodejs",
+  "version": "1.0.0",
+  "description": "harsh",
+  "main": "app.js",
+  "scripts": {
+    "test": "app.js"
+  },
+  "author": "harsh patil",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

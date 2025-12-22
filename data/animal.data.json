@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Lion",
+    "scientificName": "Panthera leo",
+    "description": "The lion is a large cat known as the 'King of the Jungle'.",
+    "habitat": "Savanna and grassland",
+    "diet": "Carnivore",
+    "lifespan": "10-14 years",
+    "funFact": "A lion's roar can be heard from 8 km away!"
+  },
+  {
+    "id": 2,
+    "name": "Elephant",
+    "scientificName": "Loxodonta africana",
+    "description": "The largest land animal with a long trunk.",
+    "habitat": "Savannas, forests",
+    "diet": "Herbivore",
+    "lifespan": "60-70 years",
+    "funFact": "Elephants never forget!"
+  },
+  {
+    "id": 3,
+    "name": "Penguin",
+    "scientificName": "Spheniscidae",
+    "description": "Flightless birds that swim expertly.",
+    "habitat": "Antarctica",
+    "diet": "Fish and krill",
+    "lifespan": "15-20 years",
+    "funFact": "Penguins propose with a pebble."
+  }
+]
