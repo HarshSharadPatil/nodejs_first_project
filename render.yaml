@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: animal-api
+    runtime: node
+    plan: free  # Change to 'starter' or higher if you need more power
+    region: oregon  # Or 'frankfurt' for closer to India/Europe
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true  # Auto-deploy on git push (recommended)
