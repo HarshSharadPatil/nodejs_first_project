@@ -6,4 +6,10 @@ services:
     region: oregon  # Or 'frankfurt' for closer to India/Europe
     buildCommand: npm install
     startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_FILE_PATH
+        value: ./data/animal.data.json
+      # Add other environment variables as needed after deployment
     autoDeploy: true  # Auto-deploy on git push (recommended)

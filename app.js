@@ -1,82 +1,74 @@
  const { count } = require('console');
 const express= require('express');
- const fs =require('fs');
+const fs =require('fs');
 const { join } = require('path');
- const app =express();
- const PORT= process.env.PORT  ||  3000;
- const dataFilePath=join(__dirname,'data','animal.data.json');
+const app =express();
+require('dotenv').config(); // Load environment variables
 
+const PORT = process.env.PORT || 3000;
+const dataFilePath = join(__dirname,'data','animal.data.json');
 
- const getdata=()=>{
+const getdata=()=>{
     try {
-        
+        if (fs.existsSync(dataFilePath)) {
+            const data = fs.readFileSync(dataFilePath, 'utf8');
+            return JSON.parse(data);
+        } else {
+            return [];
+        }
     } catch (error) {
         console.error("error reading animal data=",error);
         return [];
     }
- };
+};
 
 
- app.use(express.json);
+app.use(express.json());
 
-  app.get('/api/animals',(req,res)=>{
-    const animal = getdata();
+app.get('/api/animals',(req,res)=>{
+    const animals = getdata();
     res.json({
         success:true,
-        count:animal.length,
-        data:animal
+        count:animals.length,
+        data:animals
     });
-  });
+});
 
-  app.get('/api/animals/:id',(req,res) =>{
-    const animal=getdata();
+app.get('/api/animals/:id',(req,res) =>{
+    const animals=getdata();
     const id=parseInt(req.params.id);
-    const animals=animal.find(a =>a.id === id);
-    if (!animals){
-      return  res.status(404).json({
+    const animal=animals.find(a =>a.id === id);
+    if (!animal){
+        return  res.status(404).json({
             success:false,
-            Message:"animal is not fount"
-
+            Message:"animal is not found"
         });
     }
     res.json({
-       success:true,
-       data:animals
+        success:true,
+        data:animal
     });
-
-    app.get('/api/animals/search',(req,res)=>{
-        const {name}=req.query;
-        if (!name) {
-            return res.status(404).json({success:false,Message:"plize provide  name "});
-        }
-        const animal= getdata();
-        const filterdata=animal.filter(a => a.name.toLowerCase().include(name.toLowerCase));
-      
-          res.json({
-            success:true,
-            count: filterdata.length,
-            data: filterdata
-          });
-
-
-        
-
-    });
-
-
-
-    app.get('/', (req, res) => {
-  res.send('<h1>Animal API is running! 🚀</h1><p>Try: <a href="/api/animals">/api/animals</a></p>');
 });
 
+app.get('/api/animals/search',(req,res)=>{
+    const {name}=req.query;
+    if (!name) {
+        return res.status(400).json({success:false,Message:"please provide a name"});
+    }
+    const animals= getdata();
+    const filteredData=animals.filter(a => a.name.toLowerCase().includes(name.toLowerCase()));
 
+    res.json({
+        success:true,
+        count: filteredData.length,
+        data: filteredData
+    });
+});
 
+app.get('/', (req, res) => {
+    res.send('<h1>Animal API is running! 🚀</h1><p>Try: <a href="/api/animals">/api/animals</a></p>');
+});
 
-
-
-
-        app.listen(PORT,()=>{
-            console.log('server is running in this port ',PORT)
-        });
-                 
-  });
+app.listen(PORT,()=>{
+    console.log('server is running on port',PORT)
+});
